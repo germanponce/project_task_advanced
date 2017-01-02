@@ -1,32 +1,26 @@
 # -*- coding: utf-8 -*-
-#
-#
+
 {
-    'name': "Presupuestos para Inmobiliarias",
+    'name': "Generacion de Tareas en Base a Presupuestos",
     'description': """
-Presupuestos para Inmobiliarias
-===============================
+Generacion de Tareas y Mejoras de Proyectos
+===========================================
 
-Este modulo crea un menu con el cual podras crear Presupuestos para Empresas Inmobiliarias y poder generar un Pedido de Compra a partir de este.
+Este modulo permite generar una Tarea desde una linea de Presupuesto.
 
-Los Calculos son en base al total de Viviendas y cada linea de presupuesto es definida de forma unitaria.
+Al generar una tarea desde linea de Pedido esta creara una relacion entre ambas, si se elimina la tarea relacionada con la linea del presupuesto, podras crearla nuevamente, en caso contrario no te dejara hacerlo.
 
-Quedando total * numero de viviendas.
-
-Al generar la orden de Compra, esta se creara de la siguiente manera:
-
-cantidad de producto * numero de viviendas.
-
-
+Al crear una tarea si no existe el proyecto lo creara, en caso contrario solo lo relacionara.
 
     """, # Descripcion
-    'author': "Daniel Maraboli - Javier Herrera", # Autor
+    'author': "German Ponce Dominguez", # Autor
     'category': 'Sales', # Categoria / Empresa
     'version': '0.1', # 
-    'depends': ["purchase","sale","account"], # Dependencias del Modulo
+    'depends': ["purchase","sale","project"], # Dependencias del Modulo
     'data': [
     
-        'quotation.xml',
+        'project.xml',
+        'security/ir.model.access.csv',
 
     ],
     'installable': True, 
