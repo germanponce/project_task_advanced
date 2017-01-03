@@ -223,6 +223,7 @@ class project_task(osv.osv):
     'ancho': fields.float('Ancho', digits=(14,2)),
     'copias': fields.float('Copias', digits=(14,2)),
     'sangrado': fields.float('Sangrado', digits=(14,2)),
+    'more_details': fields.text('Mas detalles'),
     }
 
     def _get_currency(self, cr, uid, context=None):

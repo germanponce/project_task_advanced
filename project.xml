@@ -214,10 +214,10 @@
                 <field name="user_id" options="{&quot;no_open&quot;: True}" context="{'default_groups_ref': ['base.group_user', 'base.group_partner_manager', 'project.group_project_user']}" domain="[('is_company','=',False),('customer','=',False),('supplier','=',False)]"/>
 
             </field>
-            <field name="description" position="replace">
+            <!-- <field name="description" position="replace">
                 <separator string="Mas detalles"/>
                 <field name="description" placeholder="Añade Mas detalles a la Tarea..."/>
-            </field>
+            </field> -->
 
             <field name="project_id" position="after">
                 <field name="partner_id" />
@@ -251,6 +251,9 @@
                 <field name="type_select" />
             </field>
             <field name="work_ids" position="before">
+                <separator string="Mas detalles"/>
+                    <field name="more_details" placeholder="Añade Mas detalles a la Tarea..." nolabel="1"/>
+
                 <separator string="Tiempos" />
             </field>
 
