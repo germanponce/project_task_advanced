@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 manager_project_task_costs,project.task.costs,model_project_task_costs,,1,1,1,1
+manager_project_project_photos,project_project_photos,model_project_project_photos,,1,1,1,1

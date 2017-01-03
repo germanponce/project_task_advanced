@@ -10,82 +10,91 @@ from datetime import datetime, timedelta
 import time
 from openerp.exceptions import except_orm, Warning, RedirectWarning
 
-class purchase_task_wizard(osv.osv_memory):
-    _name = 'purchase.task.wizard'
-    _description = 'Asistente de creacion de Tareas'
+# class purchase_task_wizard(osv.osv_memory):
+#     _name = 'purchase.task.wizard'
+#     _description = 'Asistente de creacion de Tareas'
+#     _columns = {
+#     'product_id': fields.many2one('product.product','Producto', readonly=True),
+
+#     }
+#     _defaults = {  
+
+#         }
+
+#     def _get_product(self, cr, uid, context=None):
+#         product_id = False
+#         active_ids = context['active_ids']
+#         if active_ids:
+#             sale_order_line = self.pool.get('sale.order.line')
+#             sale_order_line_br = sale_order_line.browse(cr, uid, active_ids, context)[0]
+#             product_id = sale_order_line_br.product_id.id
+#         return product_id
+
+#     _defaults = {  
+#         'product_id': _get_product,
+#         }
+
+#     def process_task(self, cr, uid, ids, context=None):
+#         active_ids = context['active_ids']
+#         sale_order_line = self.pool.get('sale.order.line')
+#         project_obj = self.pool.get('project.project')
+#         project_task_obj = self.pool.get('project.task')
+#         task_id = False
+#         for sale in sale_order_line.browse(cr, uid, active_ids, context):
+#             # if sale.order_id.state in ('draft','cancel'):
+#             #     raise except_orm(_('Error !'), 
+#             #                      _('El Pedido se encuentra en Borrador o Cancelado, deberia estar Confirmado.'))
+
+#             project_search = project_obj.search(cr, uid, [('name','=',sale.name)])
+#             project_id = False
+#             if project_search:
+#                 project_id = project_search[0]
+#             else:
+#                 project_vals = {
+#                     'name': sale.name,
+#                     'user_id': sale.order_id.user_id.id if sale.order_id.user_id else False,
+#                     'partner_id': sale.order_id.partner_id.id,
+#                 }
+#                 project_id = project_obj.create(cr, uid, project_vals, context)
+#             if sale.task_created:
+#                 raise except_orm(_('Error !'), 
+#                                   _('Esta Linea ya tiene asignada una Tarea!'))
+
+#             task_vals  = {
+#                 'project_id': project_id,
+#                 'partner_id': sale.order_id.partner_id.id,
+#                 'product_description': sale.name,
+#                 'name': sale.name,
+#                 'qty': sale.product_uom_qty,
+#                 'uom_id': sale.product_uom.id,
+#                 'product_id': sale.product_id.id,
+#                 'line_id': sale.id,
+#                 'user_id': sale.order_id.user_id.id,
+#                 'state':'curse',
+#             }
+#             task_id = project_task_obj.create(cr, uid, task_vals, context)
+#             sale.write({'task_created': True})
+
+#         return {
+#                 'type': 'ir.actions.act_window',
+#                 'name': _('Tarea Nueva'),
+#                 'res_model': 'project.task',
+#                 'res_id': task_id, ### Un Solo ID
+#                 'view_type': 'form',
+#                 'view_mode': 'form',
+#                 'view_id': False,
+#                 'target': 'current',
+#                 #'target': 'new',
+#                 'nodestroy': True,
+#             }
+class project_project_photos(osv.osv):
+    _name = 'project.project.photos'
+    _description = 'Descripcion del Modelo'
     _columns = {
-    'product_id': fields.many2one('product.product','Producto', readonly=True),
-
+        'photo': fields.binary('Fotografia'),
+        'project_id': fields.many2one('project.project','ID Ref')
     }
-    _defaults = {  
 
-        }
-
-    def _get_product(self, cr, uid, context=None):
-        product_id = False
-        active_ids = context['active_ids']
-        if active_ids:
-            sale_order_line = self.pool.get('sale.order.line')
-            sale_order_line_br = sale_order_line.browse(cr, uid, active_ids, context)[0]
-            product_id = sale_order_line_br.product_id.id
-        return product_id
-
-    _defaults = {  
-        'product_id': _get_product,
-        }
-
-    def process_task(self, cr, uid, ids, context=None):
-        active_ids = context['active_ids']
-        sale_order_line = self.pool.get('sale.order.line')
-        project_obj = self.pool.get('project.project')
-        project_task_obj = self.pool.get('project.task')
-        task_id = False
-        for sale in sale_order_line.browse(cr, uid, active_ids, context):
-            if sale.order_id.state in ('draft','cancel'):
-                raise except_orm(_('Error !'), 
-                                 _('El Pedido se encuentra en Borrador o Cancelado, deberia estar Confirmado.'))
-
-            project_search = project_obj.search(cr, uid, [('name','=',sale.name)])
-            project_id = False
-            if project_search:
-                project_id = project_search[0]
-            else:
-                project_vals = {
-                    'name': sale.name,
-                    'user_id': sale.order_id.user_id.id if sale.order_id.user_id else False,
-                    'partner_id': sale.order_id.partner_id.id,
-                }
-                project_id = project_obj.create(cr, uid, project_vals, context)
-            if sale.task_created:
-                raise except_orm(_('Error !'), 
-                                  _('Esta Linea ya tiene asignada una Tarea!'))
-
-            task_vals  = {
-                'project_id': project_id,
-                'partner_id': sale.order_id.partner_id.id,
-                'product_description': sale.name,
-                'name': sale.name,
-                'qty': sale.product_uom_qty,
-                'uom_id': sale.product_uom.id,
-                'product_id': sale.product_id.id,
-                'line_id': sale.id,
-                'user_id': sale.order_id.user_id.id,
-            }
-            task_id = project_task_obj.create(cr, uid, task_vals, context)
-            sale.write({'task_created': True})
-            
-        return {
-                'type': 'ir.actions.act_window',
-                'name': _('Tarea Nueva'),
-                'res_model': 'project.task',
-                'res_id': task_id, ### Un Solo ID
-                'view_type': 'form',
-                'view_mode': 'form',
-                'view_id': False,
-                'target': 'current',
-                #'target': 'new',
-                'nodestroy': True,
-            }
 
 class project_project(osv.osv):
     _name = 'project.project'
@@ -93,6 +102,19 @@ class project_project(osv.osv):
 
 
     _columns = {
+    'photo_ids': fields.one2many('project.project.photos','project_id', 'Fotografias'),
+    ## Publicidad Exterior ###
+    'notas1': fields.char('Notas/Medidas', size=256),
+    'notas2': fields.char('Notas/Medidas', size=256),
+    'notas3': fields.char('Notas/Medidas', size=256),
+    'notas4': fields.char('Notas/Medidas', size=256),
+    'address': fields.text('Direcciond de montaje'),
+    'cliente': fields.char('Cliente', size=256),
+    'direccion_obra': fields.char('Direccion Obra', size=256),
+    'electricista': fields.char('Electricista', size=256),
+    'constructor': fields.char('Constructor', size=256),
+    'pub_notas': fields.text('Notas', size=256),
+
 
     ## Diseño Web ###
     'url_admin': fields.char('URL Admin', size=256),
@@ -176,6 +198,7 @@ class project_task(osv.osv):
 
     _columns = {
     'line_id': fields.many2one('sale.order.line', 'Linea Origen'),
+    'order_id': fields.many2one('sale.order', 'Pedido Origen'),
     'state': fields.selection([('draft','Borrador'),('curse','Curso'),('done','Finalizado'),('cancel','Cancelado')], 'Estado', track_visibility='onchange'),
     'execute_date': fields.date('Fecha Ejecucion'),
     ### Campos Calculados ####
@@ -185,16 +208,21 @@ class project_task(osv.osv):
 
     'phone_partner' : fields.related('partner_id', 'phone', type="char", size=128, string="Telefono", readonly=True),
     'mail_partner': fields.related('partner_id', 'email', type='char', size=256,string='Email', readonly=True, help='Informacion proveniente del Cliente', ),
+    'ref_created': fields.related('partner_id', 'ref_created', type='char', size=256,string='Ref Cliente', readonly=True, help='Informacion proveniente del Cliente', ),
     'production_file': fields.char('Ruta archivo produccion', size=256),
     
     'product_description': fields.char('Descripcion Producto', size=256),
-    'qty': fields.float('Cantidad', digits=(14,2)),
+    'qty': fields.float('Cantidad Presupuestada', digits=(14,2)),
     'uom_id': fields.many2one("product.uom", 'Unidad'),
     'product_id': fields.many2one('product.product', 'Producto'),
     'subcontratacion_id': fields.many2one('res.partner', 'Subcontratacion'),
     'type_select': fields.many2one('project.type', 'Tipo'),
     'cost_ids': fields.one2many('project.task.costs', 'task_id', 'Costos'),
     'currency_id': fields.many2one('res.currency', 'Moneda'),
+    'alto': fields.float('Alto', digits=(14,2)),
+    'ancho': fields.float('Ancho', digits=(14,2)),
+    'copias': fields.float('Copias', digits=(14,2)),
+    'sangrado': fields.float('Sangrado', digits=(14,2)),
     }
 
     def _get_currency(self, cr, uid, context=None):
@@ -297,3 +325,58 @@ class sale_order_line(osv.osv):
 
     _defaults = {
         }
+
+    def process_task(self, cr, uid, ids, context=None):
+        sale_order_line = self.pool.get('sale.order.line')
+        project_obj = self.pool.get('project.project')
+        project_task_obj = self.pool.get('project.task')
+        task_id = False
+        for sale in self.browse(cr, uid, ids, context):
+            # if sale.order_id.state in ('draft','cancel'):
+            #     raise except_orm(_('Error !'), 
+            #                      _('El Pedido se encuentra en Borrador o Cancelado, deberia estar Confirmado.'))
+
+            project_search = project_obj.search(cr, uid, [('name','=',sale.order_id.name)])
+            project_id = False
+            if project_search:
+                project_id = project_search[0]
+            else:
+                project_vals = {
+                    'name': sale.order_id.name,
+                    'user_id': sale.order_id.user_id.id if sale.order_id.user_id else False,
+                    'partner_id': sale.order_id.partner_id.id,
+                }
+                project_id = project_obj.create(cr, uid, project_vals, context)
+            if sale.task_created:
+                raise except_orm(_('Error !'), 
+                                  _('Esta Linea ya tiene asignada una Tarea, si desea modificarla es necesario eliminar la tarea relacionada.'))
+
+            task_vals  = {
+                'project_id': project_id,
+                'partner_id': sale.order_id.partner_id.id,
+                'product_description': sale.name,
+                'name': sale.name,
+                'qty': sale.product_uom_qty,
+                'uom_id': sale.product_uom.id,
+                'product_id': sale.product_id.id,
+                'line_id': sale.id,
+                'order_id': sale.order_id.id,
+                'user_id': sale.order_id.user_id.id,
+                'state':'curse',
+            }
+            task_id = project_task_obj.create(cr, uid, task_vals, context)
+            sale.write({'task_created': True})
+
+        return {
+                'type': 'ir.actions.act_window',
+                'name': _('Tarea Nueva'),
+                'res_model': 'project.task',
+                'res_id': task_id, ### Un Solo ID
+                'view_type': 'form',
+                'view_mode': 'form',
+                'view_id': False,
+                'target': 'current',
+                #'target': 'new',
+                'nodestroy': True,
+            }
+
