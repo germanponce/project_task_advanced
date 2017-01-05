@@ -9,6 +9,7 @@ from openerp.tools.translate import _
 from datetime import datetime, timedelta
 import time
 from openerp.exceptions import except_orm, Warning, RedirectWarning
+from openerp import SUPERUSER_ID
 
 # class purchase_task_wizard(osv.osv_memory):
 #     _name = 'purchase.task.wizard'
@@ -102,6 +103,7 @@ class project_project(osv.osv):
 
 
     _columns = {
+    'ref_order': fields.char('Referencia Pedido', type='char', size=256, readonly=True, help='Informacion proveniente del Cliente', ),
     'photo_ids': fields.one2many('project.project.photos','project_id', 'Fotografias'),
     ## Publicidad Exterior ###
     'notas1': fields.char('Notas/Medidas', size=256),
@@ -164,6 +166,14 @@ class project_project(osv.osv):
     _defaults = {
         }
 
+    def create(self, cr, uid, vals, context=None):
+        res = super(project_project, self).create(cr, SUPERUSER_ID, vals, context=context)
+        return res
+
+    def write(self, cr, uid, ids, vals, context=None):
+        res = super(project_project, self).create(cr, SUPERUSER_ID, ids, vals, context=context)
+        return res
+
 class project_task(osv.osv):
     _name = 'project.task'
     _inherit ='project.task'
@@ -197,6 +207,7 @@ class project_task(osv.osv):
         return res 
 
     _columns = {
+    'ref_order': fields.char('Referencia Pedido', type='char', size=256, readonly=True, help='Informacion proveniente del Cliente', ),
     'line_id': fields.many2one('sale.order.line', 'Linea Origen'),
     'order_id': fields.many2one('sale.order', 'Pedido Origen'),
     'state': fields.selection([('draft','Borrador'),('curse','Curso'),('done','Finalizado'),('cancel','Cancelado')], 'Estado', track_visibility='onchange'),
@@ -346,6 +357,7 @@ class sale_order_line(osv.osv):
                     'name': sale.order_id.name,
                     'user_id': sale.order_id.user_id.id if sale.order_id.user_id else False,
                     'partner_id': sale.order_id.partner_id.id,
+                    'ref_order':sale.order_id.ref_order,
                 }
                 project_id = project_obj.create(cr, uid, project_vals, context)
             if sale.task_created:
@@ -364,6 +376,7 @@ class sale_order_line(osv.osv):
                 'order_id': sale.order_id.id,
                 'user_id': sale.order_id.user_id.id,
                 'state':'curse',
+                'ref_order':sale.order_id.ref_order,
             }
             task_id = project_task_obj.create(cr, uid, task_vals, context)
             sale.write({'task_created': True})
@@ -381,3 +394,13 @@ class sale_order_line(osv.osv):
                 'nodestroy': True,
             }
 
+class sale_order(osv.osv):
+    _name = 'sale.order'
+    _inherit ='sale.order'
+    _columns = {
+    'ref_order': fields.char('Referencia Pedido', type='char', size=256, readonly=True, help='Informacion proveniente del Cliente', ),
+    'quotation_accept': fields.boolean('Presupuesto Aceptado'),
+        }
+
+    _defaults = {
+        }
