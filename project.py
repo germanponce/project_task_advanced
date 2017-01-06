@@ -269,7 +269,7 @@ class project_task(osv.osv):
         for rec in self.browse(cr, uid, ids, context):
             if rec.line_id:
                 rec.line_id.write({'task_created':False})
-        return super(project_task, self).create(cr, uid, values, context=context)
+        return super(project_task, self).unlink(cr, uid, ids, context=context)
 
 class project_task_costs(osv.osv):
     _name = 'project.task.costs'
