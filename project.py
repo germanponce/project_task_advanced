@@ -167,11 +167,11 @@ class project_project(osv.osv):
         }
 
     def create(self, cr, uid, vals, context=None):
-        res = super(project_project, self).create(cr, SUPERUSER_ID, vals, context=context)
+        res = super(project_project, self).create(cr, SUPERUSER_ID, vals, context)
         return res
 
     def write(self, cr, uid, ids, vals, context=None):
-        res = super(project_project, self).create(cr, SUPERUSER_ID, ids, vals, context=context)
+        res = super(project_project, self).create(cr, SUPERUSER_ID, ids, vals, context)
         return res
 
 class project_task(osv.osv):
