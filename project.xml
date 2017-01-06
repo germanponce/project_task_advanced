@@ -407,7 +407,10 @@
             <field name="state" position="before">
                 <field name="quotation_status"/>
             </field>
-            
+            <tree position="attributes">
+                    <attribute name="colors">green:quotation_status=='Aprobado';yellow:quotation_status=='Pendiente';red:quotation_status=='Cancelado';</attribute>
+
+            </tree>
         </field>
     </record>
     </data>
