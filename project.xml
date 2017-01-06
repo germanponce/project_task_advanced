@@ -402,7 +402,7 @@
         <field name="inherit_id" ref="sale.view_order_tree"/>
         <field name="arch" type="xml">
             <field name="state" position="before">
-                <field name="quotation_accept"/>
+                <field name="quotation_status"/>
             </field>
             
         </field>
