@@ -103,7 +103,7 @@ class project_project(osv.osv):
 
 
     _columns = {
-    'ref_order': fields.char('Referencia Pedido', type='char', size=256, readonly=True, help='Informacion proveniente del Cliente', ),
+    'ref_order': fields.char('Referencia Cliente', type='char', size=256, readonly=True, help='Informacion proveniente del Cliente', ),
     'photo_ids': fields.one2many('project.project.photos','project_id', 'Fotografias'),
     ## Publicidad Exterior ###
     'notas1': fields.char('Notas/Medidas', size=256),
@@ -207,7 +207,7 @@ class project_task(osv.osv):
         return res 
 
     _columns = {
-    'ref_order': fields.char('Referencia Pedido', type='char', size=256, readonly=True, help='Informacion proveniente del Cliente', ),
+    'ref_order': fields.char('Referencia Cliente', type='char', size=256, readonly=True, help='Informacion proveniente del Cliente', ),
     'line_id': fields.many2one('sale.order.line', 'Linea Origen'),
     'order_id': fields.many2one('sale.order', 'Pedido Origen'),
     'state': fields.selection([('draft','Borrador'),('curse','Curso'),('done','Finalizado'),('cancel','Cancelado')], 'Estado', track_visibility='onchange'),
@@ -357,7 +357,7 @@ class sale_order_line(osv.osv):
                     'name': sale.order_id.name,
                     'user_id': sale.order_id.user_id.id if sale.order_id.user_id else False,
                     'partner_id': sale.order_id.partner_id.id,
-                    'ref_order':sale.order_id.ref_order,
+                    'ref_order':sale.order_id.client_order_ref,
                 }
                 project_id = project_obj.create(cr, uid, project_vals, context)
             if sale.task_created:
@@ -376,7 +376,7 @@ class sale_order_line(osv.osv):
                 'order_id': sale.order_id.id,
                 'user_id': sale.order_id.user_id.id,
                 'state':'curse',
-                'ref_order':sale.order_id.ref_order,
+                'ref_order':sale.order_id.client_order_ref,
             }
             task_id = project_task_obj.create(cr, uid, task_vals, context)
             sale.write({'task_created': True})

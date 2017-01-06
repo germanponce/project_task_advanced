@@ -381,8 +381,11 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-            <field name="date_order" position="after">
-                <field name="ref_order" required="1"/>
+            <!-- <field name="date_order" position="after">
+                <field name="ref_order"/>
+            </field> -->
+            <field name="client_order_ref" position="after">
+                <field name="client_order_ref" required="1"/>
             </field>
             <notebook position="before">
                 <group>
