@@ -384,7 +384,7 @@
             <!-- <field name="date_order" position="after">
                 <field name="ref_order"/>
             </field> -->
-            <field name="client_order_ref" position="after">
+            <field name="client_order_ref" position="replace">
                 <field name="client_order_ref" required="1"/>
             </field>
             <notebook position="before">
