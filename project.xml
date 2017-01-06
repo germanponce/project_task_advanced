@@ -408,7 +408,7 @@
                 <field name="quotation_status"/>
             </field>
             <tree position="attributes">
-                    <attribute name="colors">green:quotation_status=='Aprobado';yellow:quotation_status=='Pendiente';red:quotation_status=='Cancelado';blue:quotation_status=='Curso';</attribute>
+                    <attribute name="colors">green:quotation_status=='Aprobado';yellow:quotation_status=='Pendiente';red:quotation_status=='Cancelado';</attribute>
 
             </tree>
         </field>

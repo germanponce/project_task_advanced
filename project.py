@@ -399,7 +399,7 @@ class sale_order(osv.osv):
     _inherit ='sale.order'
     _columns = {
     'ref_order': fields.char('Referencia Pedido', type='char', size=256, help='Informacion proveniente del Cliente', ),
-    'quotation_status': fields.selection([('Pendiente','Pendiente'),('Curso','Curso'),('Aprobado','Aprobado'),('Cancelado','Cancelado')],'Situacion de Presupuesto', track_visibility="onchange"),
+    'quotation_status': fields.selection([('Pendiente','Pendiente'),('Aprobado','Aprobado'),('Cancelado','Cancelado')],'Situacion de Presupuesto', track_visibility="onchange"),
         }
 
     _defaults = {
