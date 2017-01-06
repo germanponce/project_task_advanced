@@ -389,7 +389,7 @@
                     <group>
                     </group>
                     <group>
-                        <field name="quotation_accept" />
+                        <field name="quotation_status" />
                     </group>
                 </group>
             </notebook>
