@@ -269,7 +269,7 @@
             <field name="project_id" position="replace">
                 <field name="project_id" domain="[('state','not in', ('close', 'cancelled'))]" on_change="onchange_project(project_id)" context="{'default_use_tasks':1}" groups="project_task_advanced.field_project_project" />           
                 <field name="partner_id" groups="project_task_advanced.field_project_cliente"/>
-                <field name="ref_created" />
+                <field name="ref_created" invisible="1"/>
                 <field name="phone_partner" />
                 <field name="mail_partner" />
                 <field name="production_file" />
