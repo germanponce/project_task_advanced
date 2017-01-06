@@ -398,7 +398,7 @@ class sale_order(osv.osv):
     _name = 'sale.order'
     _inherit ='sale.order'
     _columns = {
-    'ref_order': fields.char('Referencia Pedido', type='char', size=256, readonly=True, help='Informacion proveniente del Cliente', ),
+    'ref_order': fields.char('Referencia Pedido', type='char', size=256, help='Informacion proveniente del Cliente', ),
     'quotation_accept': fields.boolean('Presupuesto Aceptado'),
         }
 
