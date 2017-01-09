@@ -103,7 +103,7 @@ class project_project(osv.osv):
 
 
     _columns = {
-    'ref_order': fields.char('Referencia Cliente', type='char', size=256, readonly=True, help='Informacion proveniente del Cliente', ),
+    'ref_order': fields.char('Referencia Pedido', type='char', size=256, readonly=True, help='Informacion proveniente del Cliente', ),
     'photo_ids': fields.one2many('project.project.photos','project_id', 'Fotografias'),
     ## Publicidad Exterior ###
     'notas1': fields.char('Notas/Medidas', size=256),
@@ -207,7 +207,7 @@ class project_task(osv.osv):
         return res 
 
     _columns = {
-    'ref_order': fields.char('Referencia Cliente', type='char', size=256, readonly=True, help='Informacion proveniente del Cliente', ),
+    'ref_order': fields.char('Referencia Pedido', type='char', size=256, readonly=True, help='Informacion proveniente del Cliente', ),
     'line_id': fields.many2one('sale.order.line', 'Linea Origen'),
     'order_id': fields.many2one('sale.order', 'Pedido Origen'),
     'state': fields.selection([('draft','Borrador'),('curse','Curso'),('done','Finalizado'),('cancel','Cancelado')], 'Estado', track_visibility='onchange'),
@@ -337,7 +337,13 @@ class sale_order_line(osv.osv):
 
     _defaults = {
         }
-
+    def copy(self, cr, uid, ids, default=None, context=None):
+         default.update({
+                        'task_created': False, 
+                        })
+        res = super(sale_order_line,self).copy(cr, uid, ids, default, context)
+        return res
+        
     def process_task(self, cr, uid, ids, context=None):
         sale_order_line = self.pool.get('sale.order.line')
         project_obj = self.pool.get('project.project')
