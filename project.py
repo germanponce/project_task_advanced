@@ -429,8 +429,10 @@ class sale_order_line(osv.osv):
     
     def _check_notas(self, cr, uid, ids): 
         for rec in self.browse(cr, uid, ids, context):
-            if 'SUPERFICIE' not in rec.name:
-                notas = rec.name
+            if rec.product_id:
+                description = rec.product_id.default_code if rec.product_id.default_code else ''
+                description = '['+description+'] '+rec.product_id.name            
+                notas = description
                 product_br = rec.product_id
                 extra_info_superficie = "SUPERFICIE: "+str(product_br.ancho)+" X "+str(product_br.alto)+ "COPIAS: "+str(product_br.cantidades_ancho_alto)
                 extra_info_lineal = "MLINEAL: "+str(product_br.lado_1)+" + "+str(product_br.lado_2)+ "+ "+str(product_br.lado_3)+" + "+str(product_br.lado_4)
