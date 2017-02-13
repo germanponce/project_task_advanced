@@ -434,8 +434,8 @@ class sale_order_line(osv.osv):
                 description = '['+description+'] '+rec.product_id.name            
                 notas = description
                 product_br = rec.product_id
-                extra_info_superficie = "SUPERFICIE: "+str(product_br.ancho)+" X "+str(product_br.alto)+ "COPIAS: "+str(product_br.cantidades_ancho_alto)
-                extra_info_lineal = "MLINEAL: "+str(product_br.lado_1)+" + "+str(product_br.lado_2)+ "+ "+str(product_br.lado_3)+" + "+str(product_br.lado_4)
+                extra_info_superficie = "SUPERFICIE: "+str(rec.ancho)+" X "+str(rec.alto)+ "COPIAS: "+str(rec.cantidades_ancho_alto)
+                extra_info_lineal = "MLINEAL: "+str(rec.lado_1)+" + "+str(rec.lado_2)+ "+ "+str(rec.lado_3)+" + "+str(rec.lado_4)
                 notas = notas+"\n"+extra_info_superficie+"\n"+extra_info_lineal
                 rec.write({'name':notas})
         return True
