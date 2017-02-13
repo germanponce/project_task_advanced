@@ -431,7 +431,10 @@ class sale_order_line(osv.osv):
         for rec in self.browse(cr, uid, ids, context):
             if rec.product_id:
                 description = rec.product_id.default_code if rec.product_id.default_code else ''
-                description = '['+description+'] '+rec.product_id.name            
+                if description:
+                    description = '['+description+'] '+rec.product_id.name            
+                else:
+                    description = rec.product_id.name            
                 notas = description
                 product_br = rec.product_id
                 extra_info_superficie = "SUPERFICIE: "+str(rec.ancho)+" X "+str(rec.alto)+ "COPIAS: "+str(rec.cantidades_ancho_alto)
