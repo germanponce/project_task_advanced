@@ -273,6 +273,19 @@ class project_task(osv.osv):
                 rec.line_id.write({'task_created':False})
         return super(project_task, self).unlink(cr, uid, ids, context=context)
 
+    def onchange_project(self, cr, uid, id, project_id, context=None):
+        res = super(project_task, self).onchange_project(cr, uid, id, project_id, context)
+        if project_id:
+            project = self.pool.get('project.project').browse(cr, uid, project_id, context=context)
+            res['value'].update({'type_select': project.type_id.id})
+        return res
+        # if project_id:
+        #     project = self.pool.get('project.project').browse(cr, uid, project_id, context=context)
+        #     if project and project.partner_id:
+        #         return {'value': {'partner_id': project.partner_id.id}}
+        # return {}
+
+
 class project_task_costs(osv.osv):
     _name = 'project.task.costs'
     _description = 'Costos'
@@ -340,6 +353,17 @@ class sale_order_line(osv.osv):
     _defaults = {
         }
 
+    def create(self, cr, uid, vals, context=None):
+        res = super(sale_order_line, self).create(cr, uid, vals, context)
+        rec_br = self.browse(cr, uid, res, context)
+        product_br = rec_br.product_id
+        notas = rec_br.name
+        extra_info_superficie = "SUPERFICIE: "+str(product_br.ancho)+" X "+str(product_br.alto)+ "COPIAS: "+str(product_br.cantidades_ancho_alto)
+        extra_info_lineal = "MLINEAL: "+str(product_br.lado_1)+" + "+str(product_br.lado_2)+ "+ "+str(product_br.lado_3)+" + "+str(product_br.lado_4)
+        notas = notas+"\n"+extra_info_superficie+"\n"+extra_info_lineal
+        rec_br.write({'name':notas})
+        return res
+        
     # def copy(self, cr, uid, ids, default=None, context=None):
     #     default.update({
     #                     'task_created': False, 
@@ -408,7 +432,7 @@ class sale_order(osv.osv):
     _inherit ='sale.order'
     _columns = {
         'ref_order': fields.char('Referencia Pedido', type='char', size=256, help='Informacion proveniente del Cliente', ),
-        'quotation_status': fields.selection([('Pendiente','Pendiente'),('Aprobado','Aprobado'),('Cancelado','Cancelado')],'Situacion de Presupuesto', track_visibility="onchange"),
+        'quotation_status': fields.selection([('Pendiente','Pendiente'),('Aprobado','Aprobado')],'Situacion de Presupuesto', track_visibility="onchange"),
         'oportunity_origin': fields.many2one('crm.lead', 'Oportunidad Origen'),
         'phone_partner' : fields.related('partner_id', 'phone', type="char", size=128, string="Telefono", readonly=True),
         'mail_partner': fields.related('partner_id', 'email', type='char', size=256,string='Email', readonly=True, help='Informacion proveniente del Cliente', ),

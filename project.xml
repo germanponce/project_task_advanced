@@ -456,8 +456,11 @@
             <field name="state" position="before">
                 <field name="quotation_status"/>
             </field>
+            <field name="name" position="after">
+                <field name="client_order_ref"  string="Referencia Pedido"/>
+            </field>
             <tree position="attributes">
-                    <attribute name="colors">green:quotation_status=='Aprobado';black:quotation_status=='Pendiente';red:quotation_status=='Cancelado';</attribute>
+                    <attribute name="colors">green:quotation_status=='Aprobado';black:quotation_status=='Pendiente';red:state=='cancel';</attribute>
 
             </tree>
         </field>
