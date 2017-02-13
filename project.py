@@ -165,6 +165,8 @@ class project_project(osv.osv):
 
     _defaults = {
         }
+        
+    _order = 'date_start'
 
     def create(self, cr, uid, vals, context=None):
         res = super(project_project, self).create(cr, SUPERUSER_ID, vals, context)
@@ -248,7 +250,7 @@ class project_task(osv.osv):
     'state': 'draft',
         }
 
-    _order = 'id asc' 
+    _order = 'date_start' 
 
     def button_dummy(self, cr, uid, ids, context=None):
         return True
@@ -332,18 +334,19 @@ class sale_order_line(osv.osv):
     _name = 'sale.order.line'
     _inherit ='sale.order.line'
     _columns = {
-    'task_created': fields.boolean('Tarea Creada'),
+    'task_created': fields.boolean('Tarea Creada',copy=False),
         }
 
     _defaults = {
         }
-    def copy(self, cr, uid, ids, default=None, context=None):
-         default.update({
-                        'task_created': False, 
-                        })
-        res = super(sale_order_line,self).copy(cr, uid, ids, default, context)
-        return res
-        
+
+    # def copy(self, cr, uid, ids, default=None, context=None):
+    #     default.update({
+    #                     'task_created': False, 
+    #                     })
+    #     res = super(sale_order_line,self).copy(cr, uid, ids, default, context)
+    #     return res
+
     def process_task(self, cr, uid, ids, context=None):
         sale_order_line = self.pool.get('sale.order.line')
         project_obj = self.pool.get('project.project')
@@ -409,4 +412,5 @@ class sale_order(osv.osv):
         }
 
     _defaults = {
+        'pricelist_id': False,
         }
