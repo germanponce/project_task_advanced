@@ -107,10 +107,21 @@
                 <field name="phone_partner" />
                 <field name="mail_partner" />
                 <field name="payment_term" />
-                <!-- <field name="payment_mode_id" /> -->
+                <field name="payment_mode_id" domain="[('sale_ok', '=', True)]" widget="selection"/>
             </field>
         </field>
     </record>
+
+    <record id="view_task_advanced_form_payment_id_inh" model="ir.ui.view">
+        <field name="name">view.sale.order.pay.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="account_payment_sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="payment_mode_id" position="replace">
+            </field>
+        </field>
+    </record>
+
 
     <record id="projec_project_task_advanced" model="ir.ui.view">
         <field name="name">view.project.project.form</field>
