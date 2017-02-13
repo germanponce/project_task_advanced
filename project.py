@@ -427,7 +427,7 @@ class sale_order_line(osv.osv):
                 'nodestroy': True,
             }
     
-    def _check_notas(self, cr, uid, ids, context=None): 
+    def update_values_superficie_lineal(self, cr, uid, ids, context=None): 
         for rec in self.browse(cr, uid, ids, context):
             if rec.product_id:
                 description = rec.product_id.default_code if rec.product_id.default_code else ''
@@ -439,7 +439,6 @@ class sale_order_line(osv.osv):
                 notas = notas+"\n"+extra_info_superficie+"\n"+extra_info_lineal
                 rec.write({'name':notas})
         return True
-    _constraints = [(_check_notas, 'Error: Notas Invalidas por falta de informacion', ['name']), ] 
 
 class sale_order(osv.osv):
     _name = 'sale.order'
@@ -456,6 +455,13 @@ class sale_order(osv.osv):
     _defaults = {
         'pricelist_id': False,
         }
+
+    def create(self, cr, uid, vals, context=None):
+        res = super(sale_order, self).create(cr, uid, vals, context)
+        rec_br = self.browse(cr, uid, res, context)
+        for line in rec_br.order_line:
+            line.update_values_superficie_lineal()
+        return res
 
     def default_get(self, cr, uid, fields, context = None):
         rs = super(sale_order, self).default_get(cr, uid, fields, context)
