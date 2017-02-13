@@ -440,6 +440,11 @@ class sale_order_line(osv.osv):
                 rec.write({'name':notas})
         return True
 
+    def create(self, cr, uid, vals, context=None):
+        res = super(sale_order, self).create(cr, uid, vals, context)
+        self.update_values_superficie_lineal(cr, uid, [res], context)
+        return res
+        
 class sale_order(osv.osv):
     _name = 'sale.order'
     _inherit ='sale.order'
@@ -456,12 +461,12 @@ class sale_order(osv.osv):
         'pricelist_id': False,
         }
 
-    def create(self, cr, uid, vals, context=None):
-        res = super(sale_order, self).create(cr, uid, vals, context)
-        rec_br = self.browse(cr, uid, res, context)
-        for line in rec_br.order_line:
-            line.update_values_superficie_lineal()
-        return res
+    # def create(self, cr, uid, vals, context=None):
+    #     res = super(sale_order, self).create(cr, uid, vals, context)
+    #     rec_br = self.browse(cr, uid, res, context)
+    #     for line in rec_br.order_line:
+    #         line.update_values_superficie_lineal()
+    #     return res
 
     def default_get(self, cr, uid, fields, context = None):
         rs = super(sale_order, self).default_get(cr, uid, fields, context)
