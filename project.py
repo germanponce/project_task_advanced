@@ -441,10 +441,10 @@ class sale_order_line(osv.osv):
         return True
 
     def create(self, cr, uid, vals, context=None):
-        res = super(sale_order, self).create(cr, uid, vals, context)
+        res = super(sale_order_line, self).create(cr, uid, vals, context)
         self.update_values_superficie_lineal(cr, uid, [res], context)
         return res
-        
+
 class sale_order(osv.osv):
     _name = 'sale.order'
     _inherit ='sale.order'
