@@ -100,14 +100,14 @@
             </field>
             <field name="payment_term" position="replace">
             </field>
-            <field name="payment_mode_id" position="replace">
-            </field>
+            <!-- <field name="payment_mode_id" position="replace">
+            </field> -->
             <field name="partner_shipping_id" position="after" >
                 <field name="ref_created" />
                 <field name="phone_partner" />
                 <field name="mail_partner" />
                 <field name="payment_term" />
-                <field name="payment_mode_id" />
+                <!-- <field name="payment_mode_id" /> -->
             </field>
         </field>
     </record>
