@@ -16,7 +16,7 @@ Al crear una tarea si no existe el proyecto lo creara, en caso contrario solo lo
     'author': "German Ponce Dominguez", # Autor
     'category': 'Sales', # Categoria / Empresa
     'version': '0.1', # 
-    'depends': ["purchase","sale","project","sale_crm","account_payment_sale"], # Dependencias del Modulo
+    'depends': ["purchase","sale","project","sale_crm","account_payment_sale","sale_commission"], # Dependencias del Modulo
     'data': [
     
         'project.xml',
