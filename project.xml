@@ -102,7 +102,7 @@
             </field>
             <field name="payment_mode_id" position="replace">
             </field>
-            <field name="partner_shipping_id" position="after" />
+            <field name="partner_shipping_id" position="after" >
                 <field name="ref_created" />
                 <field name="phone_partner" />
                 <field name="mail_partner" />
