@@ -427,7 +427,7 @@ class sale_order_line(osv.osv):
                 'nodestroy': True,
             }
     
-    def _check_notas(self, cr, uid, ids): 
+    def _check_notas(self, cr, uid, ids, context): 
         for rec in self.browse(cr, uid, ids, context):
             if rec.product_id:
                 description = rec.product_id.default_code if rec.product_id.default_code else ''
