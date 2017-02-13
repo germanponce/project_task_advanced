@@ -353,17 +353,17 @@ class sale_order_line(osv.osv):
     _defaults = {
         }
 
-    def create(self, cr, uid, vals, context=None):
-        res = super(sale_order_line, self).create(cr, uid, vals, context)
-        rec_br = self.browse(cr, uid, res, context)
-        product_br = rec_br.product_id
-        notas = rec_br.name
-        extra_info_superficie = "SUPERFICIE: "+str(product_br.ancho)+" X "+str(product_br.alto)+ "COPIAS: "+str(product_br.cantidades_ancho_alto)
-        extra_info_lineal = "MLINEAL: "+str(product_br.lado_1)+" + "+str(product_br.lado_2)+ "+ "+str(product_br.lado_3)+" + "+str(product_br.lado_4)
-        notas = notas+"\n"+extra_info_superficie+"\n"+extra_info_lineal
-        rec_br.write({'name':notas})
-        return res
-        
+    # def create(self, cr, uid, vals, context=None):
+    #     res = super(sale_order_line, self).create(cr, uid, vals, context)
+    #     rec_br = self.browse(cr, uid, res, context)
+    #     product_br = rec_br.product_id
+    #     notas = rec_br.name
+    #     extra_info_superficie = "SUPERFICIE: "+str(product_br.ancho)+" X "+str(product_br.alto)+ "COPIAS: "+str(product_br.cantidades_ancho_alto)
+    #     extra_info_lineal = "MLINEAL: "+str(product_br.lado_1)+" + "+str(product_br.lado_2)+ "+ "+str(product_br.lado_3)+" + "+str(product_br.lado_4)
+    #     notas = notas+"\n"+extra_info_superficie+"\n"+extra_info_lineal
+    #     rec_br.write({'name':notas})
+    #     return res
+
     # def copy(self, cr, uid, ids, default=None, context=None):
     #     default.update({
     #                     'task_created': False, 
@@ -426,6 +426,18 @@ class sale_order_line(osv.osv):
                 #'target': 'new',
                 'nodestroy': True,
             }
+    
+    def _check_notas(self, cr, uid, ids): 
+        for rec in self.browse(cr, uid, ids, context):
+            if 'SUPERFICIE' not in rec.name:
+                notas = rec.name
+                product_br = rec.product_id
+                extra_info_superficie = "SUPERFICIE: "+str(product_br.ancho)+" X "+str(product_br.alto)+ "COPIAS: "+str(product_br.cantidades_ancho_alto)
+                extra_info_lineal = "MLINEAL: "+str(product_br.lado_1)+" + "+str(product_br.lado_2)+ "+ "+str(product_br.lado_3)+" + "+str(product_br.lado_4)
+                notas = notas+"\n"+extra_info_superficie+"\n"+extra_info_lineal
+                rec.write({'name':notas})
+        return True
+    _constraints = [(_check_notas, 'Error: Notas Invalidas por falta de informacion', ['name']), ] 
 
 class sale_order(osv.osv):
     _name = 'sale.order'
