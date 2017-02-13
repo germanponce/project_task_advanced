@@ -407,9 +407,12 @@ class sale_order(osv.osv):
     _name = 'sale.order'
     _inherit ='sale.order'
     _columns = {
-    'ref_order': fields.char('Referencia Pedido', type='char', size=256, help='Informacion proveniente del Cliente', ),
-    'quotation_status': fields.selection([('Pendiente','Pendiente'),('Aprobado','Aprobado'),('Cancelado','Cancelado')],'Situacion de Presupuesto', track_visibility="onchange"),
-    'oportunity_origin': fields.many2one('crm.lead', 'Oportunidad Origen'),
+        'ref_order': fields.char('Referencia Pedido', type='char', size=256, help='Informacion proveniente del Cliente', ),
+        'quotation_status': fields.selection([('Pendiente','Pendiente'),('Aprobado','Aprobado'),('Cancelado','Cancelado')],'Situacion de Presupuesto', track_visibility="onchange"),
+        'oportunity_origin': fields.many2one('crm.lead', 'Oportunidad Origen'),
+        'phone_partner' : fields.related('partner_id', 'phone', type="char", size=128, string="Telefono", readonly=True),
+        'mail_partner': fields.related('partner_id', 'email', type='char', size=256,string='Email', readonly=True, help='Informacion proveniente del Cliente', ),
+        'ref_created': fields.related('partner_id', 'ref_created', type='char', size=256,string='Ref Cliente', readonly=True, help='Informacion proveniente del Cliente', ),
         }
 
     _defaults = {
