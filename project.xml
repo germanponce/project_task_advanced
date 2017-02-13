@@ -90,6 +90,11 @@
                 <button name="process_task" string="Crear Tarea" type="object" class="oe_highlight" icon="gtk-execute"/>
                 
             </xpath>
+            <field name="origin" position="replace">
+            </field>
+            <field name="pricelist_id" position="after">
+                <field name="oportunity_origin" />
+            </field>
         </field>
     </record>
 
