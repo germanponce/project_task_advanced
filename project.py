@@ -88,6 +88,21 @@ from openerp import SUPERUSER_ID
 #                 #'target': 'new',
 #                 'nodestroy': True,
 #             }
+
+class account_analytic_account(osv.osv):
+    _inherit = 'account.analytic.account' 
+    _name = 'account.analytic.account'
+    _columns = {
+        'domains_url': fields.char('Dominios Vinculados', size=256),
+        'project_type': fields.many2one('project.type','Servicio Recurrente'),
+        'phone_partner' : fields.related('partner_id', 'phone', type="char", size=128, string="Telefono", readonly=True),
+        'mail_partner': fields.related('partner_id', 'email', type='char', size=256,string='Email', readonly=True, help='Informacion proveniente del Cliente', ),
+        'ref_created': fields.related('partner_id', 'ref_created', type='char', size=256,string='Ref Cliente', readonly=True, help='Informacion proveniente del Cliente', ),
+    }
+
+
+
+
 class project_project_photos(osv.osv):
     _name = 'project.project.photos'
     _description = 'Descripcion del Modelo'
@@ -161,7 +176,27 @@ class project_project(osv.osv):
     'url_marketing4': fields.char('URL Acceso', size=256),
     'usuario_marketing4': fields.char('Usuario', size=256),
     'contrasenia_marketing4': fields.char('Contraseña', size=256),
-        }
+    
+    ###### DISEÑO #####
+    'estado_presupuesto': fields.many2one('project.states.quotation', 'Estado del Presupuesto'),
+    'nombre_concretar': fields.many2one('project.nombre.concretar', 'Nombre por Concretar'),
+    'tipo_disenio': fields.many2one('project.tipo.disenio', 'Tipo de Diseño'),
+    'titulo_nombre_marca': fields.char('Titulo o nombre marca', size=128),
+    'slogan': fields.char('Slogan', size=256),
+    'perfil_potencial': fields.text('Perfil potencial del cliente'),
+    
+    'estilo_letra': fields.many2one('project.estilo.letra', 'Estilo de letra'),
+    'ref_color1': fields.char('Ref color', size=128),
+    'cromatismo': fields.many2one('project.cromatismo', 'Cromatismo'),
+    'ref_color2': fields.char('Ref color', size=128),
+
+    'estilos_fotos': fields.text('Estilos'),
+
+    'recursos_ids': fields.one2many('proejct.recursos', 'project_id', 'Recursos'),
+
+    'disenio_notas': fields.text('Notas'),
+
+    }
 
     _defaults = {
         }
@@ -176,6 +211,52 @@ class project_project(osv.osv):
         res = super(project_project, self).write(cr, SUPERUSER_ID, ids, vals, context)
         return res
 
+class project_recursos(osv.osv):
+    _name = 'project.recursos'
+    _description = 'Recursos'
+    _rec_name = 'datas_fname' 
+    _columns = {
+        'datas_fname': fields.char('File Name',size=256),
+        'file':fields.binary('Recurso', required=True), 
+        'project_id': fields.many2one('project.project', 'ID Ref'),
+    }
+
+class project_cromatismo(osv.osv):
+    _name = 'project.cromatismo'
+    _description = 'Estilo Letra'
+    _columns = {
+        'name':fields.char('Nombre', size=64, required=True), 
+    }
+
+class project_estilo_letra(osv.osv):
+    _name = 'project.estilo.letra'
+    _description = 'Estilo Letra'
+    _columns = {
+        'name':fields.char('Nombre', size=64, required=True), 
+    }
+
+
+class project_states_quotation(osv.osv):
+    _name = 'project.states.quotation'
+    _description = 'Estado Presupuesto'
+    _columns = {
+        'name':fields.char('Nombre', size=64, required=True), 
+    }
+
+class project_nombre_concretar(osv.osv):
+    _name = 'project.nombre.concretar'
+    _description = 'Nombre Concretar'
+    _columns = {
+        'name':fields.char('Nombre', size=64, required=True), 
+    }
+
+class project_tipo_disenio(osv.osv):
+    _name = 'project.tipo.disenio'
+    _description = 'Tipo Disenio'
+    _columns = {
+        'name':fields.char('Nombre', size=64, required=True), 
+    }
+ 
 class project_task(osv.osv):
     _name = 'project.task'
     _inherit ='project.task'

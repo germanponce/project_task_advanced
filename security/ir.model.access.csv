@@ -1,3 +1,9 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 manager_project_task_costs,project.task.costs,model_project_task_costs,,1,1,1,1
 manager_project_project_photos,project_project_photos,model_project_project_photos,,1,1,1,1
+manager_project_states_quotation,project_states_quotation,model_project_states_quotation,,1,1,1,1
+manager_project_nombre_concretar,project_nombre_concretar,model_project_nombre_concretar,,1,1,1,1
+manager_project_tipo_disenio,project_tipo_disenio,model_project_tipo_disenio,,1,1,1,1
+manager_project_estilo_letra,project_estilo_letra,model_project_estilo_letra,,1,1,1,1
+manager_project_cromatismo,project_cromatismo,model_project_cromatismo,,1,1,1,1
+manager_project_recursos,project_recursos,model_project_recursos,,1,1,1,1
