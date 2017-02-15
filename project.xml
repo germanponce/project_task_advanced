@@ -340,7 +340,7 @@
                     <separator string="Recursos" />
                     <field name="recursos_ids">
                         <tree editable="bottom" string="Recursos">
-                            <field name="file"  readonly="1" filename="datas_fname"/>
+                            <field name="file" filename="datas_fname"/>
                             <field name="datas_fname" invisible="1"/>
                         </tree>
                     </field>
