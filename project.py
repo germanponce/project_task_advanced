@@ -192,7 +192,7 @@ class project_project(osv.osv):
 
     'estilos_fotos': fields.text('Estilos'),
 
-    'recursos_ids': fields.one2many('proejct.recursos', 'project_id', 'Recursos'),
+    'recursos_ids': fields.one2many('project.recursos', 'project_id', 'Recursos'),
 
     'disenio_notas': fields.text('Notas'),
 
