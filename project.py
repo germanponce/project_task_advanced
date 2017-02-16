@@ -508,26 +508,76 @@ class sale_order_line(osv.osv):
                 'nodestroy': True,
             }
     
-    def update_values_superficie_lineal(self, cr, uid, ids, context=None): 
+    def update_values_superficie(self, cr, uid, ids, context=None): 
         for rec in self.browse(cr, uid, ids, context):
-            if rec.product_id:
+            if 'MLINEAL' in rec.name:
                 description = rec.product_id.default_code if rec.product_id.default_code else ''
                 if description:
                     description = '['+description+'] '+rec.product_id.name            
                 else:
-                    description = rec.product_id.name            
+                    description = rec.product_id.name
                 notas = description
                 product_br = rec.product_id
                 extra_info_superficie = "SUPERFICIE: "+str(rec.ancho)+" X "+str(rec.alto)+ "COPIAS: "+str(rec.cantidades_ancho_alto)
                 extra_info_lineal = "MLINEAL: "+str(rec.lado_1)+" + "+str(rec.lado_2)+ "+ "+str(rec.lado_3)+" + "+str(rec.lado_4)
                 notas = notas+"\n"+extra_info_superficie+"\n"+extra_info_lineal
                 rec.write({'name':notas})
+                return True
+
+            if not rec.name:
+                description = rec.product_id.default_code if rec.product_id.default_code else ''
+                if description:
+                    description = '['+description+'] '+rec.product_id.name            
+                else:
+                    description = rec.product_id.name
+            else:
+                description = rec.name          
+            notas = description
+            product_br = rec.product_id
+            extra_info_superficie = "SUPERFICIE: "+str(rec.ancho)+" X "+str(rec.alto)+ "COPIAS: "+str(rec.cantidades_ancho_alto)
+            notas = notas+"\n"+extra_info_superficie
+            # extra_info_lineal = "MLINEAL: "+str(rec.lado_1)+" + "+str(rec.lado_2)+ "+ "+str(rec.lado_3)+" + "+str(rec.lado_4)
+            # notas = notas+"\n"+extra_info_superficie+"\n"+extra_info_lineal
+            rec.write({'name':notas})
         return True
 
-    def create(self, cr, uid, vals, context=None):
-        res = super(sale_order_line, self).create(cr, uid, vals, context)
-        self.update_values_superficie_lineal(cr, uid, [res], context)
-        return res
+    def update_values_lineal(self, cr, uid, ids, context=None): 
+        for rec in self.browse(cr, uid, ids, context):
+            if 'SUPERFICIE' in rec.name:
+                description = rec.product_id.default_code if rec.product_id.default_code else ''
+                if description:
+                    description = '['+description+'] '+rec.product_id.name            
+                else:
+                    description = rec.product_id.name
+                notas = description
+                product_br = rec.product_id
+                extra_info_superficie = "SUPERFICIE: "+str(rec.ancho)+" X "+str(rec.alto)+ "COPIAS: "+str(rec.cantidades_ancho_alto)
+                extra_info_lineal = "MLINEAL: "+str(rec.lado_1)+" + "+str(rec.lado_2)+ "+ "+str(rec.lado_3)+" + "+str(rec.lado_4)
+                notas = notas+"\n"+extra_info_superficie+"\n"+extra_info_lineal
+                rec.write({'name':notas})
+                return True
+
+            if not rec.name:
+                description = rec.product_id.default_code if rec.product_id.default_code else ''
+                if description:
+                    description = '['+description+'] '+rec.product_id.name            
+                else:
+                    description = rec.product_id.name
+            else:
+                description = rec.name          
+            notas = description
+            product_br = rec.product_id
+            #extra_info_superficie = "SUPERFICIE: "+str(rec.ancho)+" X "+str(rec.alto)+ "COPIAS: "+str(rec.cantidades_ancho_alto)
+            extra_info_lineal = "MLINEAL: "+str(rec.lado_1)+" + "+str(rec.lado_2)+ "+ "+str(rec.lado_3)+" + "+str(rec.lado_4)
+            notas = notas+"\n"+extra_info_lineal
+            # notas = notas+"\n"+extra_info_superficie+"\n"+extra_info_lineal
+            rec.write({'name':notas})
+        return True
+
+    # def create(self, cr, uid, vals, context=None):
+    #     res = super(sale_order_line, self).create(cr, uid, vals, context)
+    #     self.update_values_superficie_lineal(cr, uid, [res], context)
+    #     return res
 
 class sale_order(osv.osv):
     _name = 'sale.order'

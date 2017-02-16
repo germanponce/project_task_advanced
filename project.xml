@@ -80,6 +80,22 @@
             key2="client_action_multi"
             id="action_create_task_cherman"/> -->
 
+    <record id="sale_order_line_buttons_insrt_labels" model="ir.ui.view">
+        <field name="name">view.sale.order.line.form</field>
+        <field name="model">sale.order.line</field>
+        <field name="inherit_id" ref="siur_customizations.sale_order_line_add_siur_computations_form_view"/>
+        <field name="arch" type="xml">
+            <button name="calcular_cant_ancho_alto" position="after">
+                <button name="update_values_superficie" type="object" string="Añadir Superficie Descripcion" class="oe_highlight"/>
+
+            </button>
+            <button name="calcular_cant_suma_lados" position="after">
+                <button name="update_values_lineal" type="object" string="Añadir Metro Lineal Descripcion" class="oe_highlight"/>
+            </button>
+
+        </field>
+    </record>
+
     <record id="account_analytic_account_inherit_project" model="ir.ui.view">
         <field name="name">view.account.analytic.account.form</field>
         <field name="model">account.analytic.account</field>
