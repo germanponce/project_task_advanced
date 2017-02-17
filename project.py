@@ -595,6 +595,11 @@ class sale_order(osv.osv):
         'pricelist_id': False,
         }
 
+    def onchange_partner_id(self, cr, uid, ids, part, context=None):
+        res = super(sale_order, self).onchange_partner_id(cr, uid, ids, part, context)
+        res['value'].update({'pricelist_id':False})
+        return res
+
     # def create(self, cr, uid, vals, context=None):
     #     res = super(sale_order, self).create(cr, uid, vals, context)
     #     rec_br = self.browse(cr, uid, res, context)
