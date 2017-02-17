@@ -518,7 +518,7 @@ class sale_order_line(osv.osv):
                     description = rec.product_id.name
                 notas = description
                 product_br = rec.product_id
-                extra_info_superficie = "SUPERFICIE: "+str(rec.ancho)+" X "+str(rec.alto)+ "COPIAS: "+str(rec.cantidades_ancho_alto)
+                extra_info_superficie = "SUPERFICIE: "+str(rec.ancho)+" X "+str(rec.alto)+ " COPIAS: "+str(rec.cantidades_ancho_alto)
                 extra_info_lineal = "MLINEAL: "+str(rec.lado_1)+" + "+str(rec.lado_2)+ "+ "+str(rec.lado_3)+" + "+str(rec.lado_4)
                 notas = notas+"\n"+extra_info_superficie+"\n"+extra_info_lineal
                 rec.write({'name':notas})
@@ -534,7 +534,7 @@ class sale_order_line(osv.osv):
                 description = rec.name          
             notas = description
             product_br = rec.product_id
-            extra_info_superficie = "SUPERFICIE: "+str(rec.ancho)+" X "+str(rec.alto)+ "COPIAS: "+str(rec.cantidades_ancho_alto)
+            extra_info_superficie = "SUPERFICIE: "+str(rec.ancho)+" X "+str(rec.alto)+ " COPIAS: "+str(rec.cantidades_ancho_alto)
             notas = notas+"\n"+extra_info_superficie
             # extra_info_lineal = "MLINEAL: "+str(rec.lado_1)+" + "+str(rec.lado_2)+ "+ "+str(rec.lado_3)+" + "+str(rec.lado_4)
             # notas = notas+"\n"+extra_info_superficie+"\n"+extra_info_lineal
@@ -551,7 +551,7 @@ class sale_order_line(osv.osv):
                     description = rec.product_id.name
                 notas = description
                 product_br = rec.product_id
-                extra_info_superficie = "SUPERFICIE: "+str(rec.ancho)+" X "+str(rec.alto)+ "COPIAS: "+str(rec.cantidades_ancho_alto)
+                extra_info_superficie = "SUPERFICIE: "+str(rec.ancho)+" X "+str(rec.alto)+ " COPIAS: "+str(rec.cantidades_ancho_alto)
                 extra_info_lineal = "MLINEAL: "+str(rec.lado_1)+" + "+str(rec.lado_2)+ "+ "+str(rec.lado_3)+" + "+str(rec.lado_4)
                 notas = notas+"\n"+extra_info_superficie+"\n"+extra_info_lineal
                 rec.write({'name':notas})
