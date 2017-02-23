@@ -708,3 +708,24 @@ class crm_make_sale(osv.osv_memory):
                     'res_id': new_ids
                 }
             return value
+
+class account_analytic_account(osv.osv):
+    _name = 'account.analytic.account'
+    _inherit ='account.analytic.account'
+
+    def _total_subtotal(self, cr, uid, ids, field_name, arg, context=None):
+        res = {}
+        total = 0.0
+        subtotal = 0.0
+        for rec in self.browse(cr, uid, ids, context):
+            for line in rec.recurring_invoice_line_ids:
+                subtotal+= line.price_subtotal
+            res[rec.id] = subtotal
+        return res 
+    _columns = {
+
+    'subtotal': fields.function(_total_subtotal,  digits=(14,2),  string="Total a Facturar"),
+        }
+
+    _defaults = {
+        }
